@@ -110,8 +110,14 @@ class _FormRecuperationState extends State<FormRecuperation> {
                 width: double.infinity,
                 child: RaisedButton(
                     child: Text("Recuperar"), onPressed: () => check_email()),
-              )
-
+              ),
+              FlatButton(
+                child: Text('Cancelar'),
+                padding: Constants.paddingSmall,
+                onPressed: (){
+                  dsiHelper.back(context);
+                },
+              ),
             ],
           ),
         ));
