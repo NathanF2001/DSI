@@ -1,100 +1,88 @@
-import 'package:dsi/DsiPage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dsi/aluno.dart';
+import 'package:dsi/constants.dart';
+import 'package:dsi/home.dart';
+import 'package:dsi/login.dart';
+import 'package:dsi/pessoa.dart';
+import 'package:dsi/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  _initDb();
+  runApp(DSIApp());
+}
 
-class MyApp extends StatelessWidget {
+class DSIApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _taps = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final mediaInfo = MediaQuery.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter Add to App"),
-      ),
-      body: Center(
-        child: Container(
-          height: 250,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                'Window is ${mediaInfo.size.width.toStringAsFixed(1)} x '
-                '${mediaInfo.size.height.toStringAsFixed(1)}',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(
-                "Taps: ${_taps}",
-                style: TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-              Container(
-                  width: 120,
-                  child: _ButtonHomePage("Tap me!", () {
-                    setState(() {
-                      _taps++;
-                    });
-                  })),
-              Container(
-                  child: _ButtonHomePage(
-                    "Ir página DSI",
-                        () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return DSIPage(title: 'My First App-DSI/BSI/UFRPE');
-                        }),
-                      );
-                    },
-                  )),
-              Container(
-                child: _ButtonHomePage("Exit this screen",
-                        () => SystemNavigator.pop()),
-              ),
-            ],
-          ),
-        ),
-      ),
+      title: Constants.appName,
+      theme: _buildThemeData(),
+      initialRoute: '/',
+      routes: _buildRoutes(context),
     );
   }
 
-  _ButtonHomePage(
-    text,
-    function_pressed,
-  ) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
+  ThemeData _buildThemeData() {
+    return ThemeData(
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      primarySwatch: Colors.green,
+      textTheme: TextTheme(
+        headline1: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        headline6: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
+        caption: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+        bodyText1: TextStyle(fontSize: 18.0),
+        bodyText2: TextStyle(fontSize: 16.0),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
-          side: BorderSide(color: Colors.grey)),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 18,
+        ),
+        contentPadding: Constants.paddingMedium,
+        labelStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 16.0,
         ),
       ),
-      onPressed: function_pressed,
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.green,
+        textTheme: ButtonTextTheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+      ),
     );
+  }
+
+  _buildRoutes(context) {
+    return {
+      '/': (context) => LoginPage(),
+      '/register': (context) => RegisterPage(),
+      '/home': (context) => HomePage(),
+      '/list_pessoa': (context) => ListPessoaPage(),
+      '/maintain_pessoa': (context) => MaintainPessoaPage(),
+      '/list_aluno': (context) => ListAlunoPage(),
+      '/maintain_aluno': (context) => MaintainAlunoPage(),
+    };
+  }
+}
+
+void _initDb() {
+  for (var i = 1; i <= 20; i++) {
+    var matricula = i.toString().padLeft(11, '0');
+    var cpf = '${matricula.substring(0, 3)}.'
+        '${matricula.substring(3, 6)}.'
+        '${matricula.substring(6, 9)}-'
+        '${matricula.substring(9)}';
+
+    var aluno = Aluno(
+      cpf: cpf,
+      nome: 'Aluno $i',
+      endereco: 'Rua $i, s/n.',
+      matricula: matricula,
+    );
+    //Observe que como Aluno é uma subclasse de Pessoa, o método 'save' do
+    //controlador de pessoa pode receber um aluno. Leia sobre polimorfismo de
+    //subtipo (ou simplesmente polimorfismo).
+    pessoaController.save(aluno);
   }
 }
