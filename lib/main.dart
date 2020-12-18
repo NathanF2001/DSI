@@ -3,6 +3,7 @@ import 'package:dsi/constants.dart';
 import 'package:dsi/home.dart';
 import 'package:dsi/login.dart';
 import 'package:dsi/pessoa.dart';
+import 'package:dsi/professor.dart';
 import 'package:dsi/register.dart';
 import 'package:flutter/material.dart';
 
@@ -62,6 +63,8 @@ class DSIApp extends StatelessWidget {
       '/maintain_pessoa': (context) => MaintainPessoaPage(),
       '/list_aluno': (context) => ListAlunoPage(),
       '/maintain_aluno': (context) => MaintainAlunoPage(),
+      '/list_professor': (context) => ListProfessorPage(),
+      '/maintain_professor': (context) => MaintainProfessorPage(),
     };
   }
 }

@@ -109,10 +109,7 @@ class DsiScaffold extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.school),
             title: Text('Professores'),
-            onTap: () => dsiHelper.showMessage(
-              context: context,
-              message: 'Falta implementar.',
-            ),
+            onTap: ()  => dsiHelper.go(context, '/list_professor')
           ),
           Divider(),
           ListTile(
@@ -131,25 +128,33 @@ class DsiScaffold extends StatelessWidget {
     return AppBar(
       title: title != null ? Text(title) : null,
       actions: <Widget>[
-        IconButton(
-          onPressed: () => dsiHelper.showMessage(
-            context: context,
-            message: 'Falta implementar',
-          ),
-          icon: Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
+        Builder(
+          builder: (BuildContext context){
+            return IconButton(
+              onPressed: () => dsiHelper.showMessage(
+                context: context,
+                message: 'Falta implementar',
+              ),
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            );
+          },
         ),
-        IconButton(
-          onPressed: () => dsiHelper.showMessage(
-            context: context,
-            message: 'Falta implementar',
-          ),
-          icon: Icon(
-            Icons.notifications,
-            color: Colors.white,
-          ),
+        Builder(
+          builder: (BuildContext context){
+            return IconButton(
+              onPressed: () => dsiHelper.showMessage(
+                context: context,
+                message: 'Falta implementar',
+              ),
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+            );
+          },
         ),
         PopupMenuButton(
           icon: Icon(
