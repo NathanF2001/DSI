@@ -7,9 +7,9 @@ import 'package:dsi/pessoa.dart';
 import 'package:flutter/material.dart';
 
 class Professor extends Pessoa{
-  String matricula;
+  String codigo_professor;
 
-  Professor({cpf,nome,endereco,this.matricula})
+  Professor({cpf,nome,endereco,this.codigo_professor})
     : super(cpf: cpf, nome: nome, endereco: endereco);
 }
 
@@ -82,9 +82,9 @@ class _ListProfessorPageState extends State<ListProfessorPage> {
         title: Text(professor.nome),
         subtitle: Column(
           children: [
-            Text('id. ${professor.id} (NUNCA APRESENTE O ID DE UM REGISTRO!'),
+            Text('id. ${professor.id} (Nunca fique mostrando id na tela!)'),
             SizedBox(width: 8.0),
-            Text("mat. ${professor.matricula}")
+            Text("cod. ${professor.codigo_professor}")
           ],
         ),
         onTap: () => dsiHelper.go(context, '/maintain_professor',arguments: professor),
@@ -142,12 +142,12 @@ class MaintainProfessorPage extends StatelessWidget {
             Constants.spaceSmallHeight,
             TextFormField(
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Matrícula*'),
+              decoration: const InputDecoration(labelText: 'Código professor*'),
               validator: (String value) {
-                return value.isEmpty ? 'Matrícula inválida.' : null;
+                return value.isEmpty ? 'Código professor inválida.' : null;
               },
-              initialValue: professor.matricula,
-              onSaved: (newValue) => professor.matricula = newValue,
+              initialValue: professor.codigo_professor,
+              onSaved: (newValue) => professor.codigo_professor = newValue,
             ),
           ],
         ));
