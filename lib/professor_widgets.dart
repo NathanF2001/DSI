@@ -18,8 +18,9 @@ class ListProfessorPage extends StatefulWidget {
             key: UniqueKey(),
             target: object,
             builder: (context, professor) => ListTile(
+              hoverColor: Colors.grey,
               title: Text(professor.pessoa.nome),
-              subtitle: Text('mat. ${professor.disciplina}'),
+              subtitle: Text('Disciplina: ${professor.disciplina}'),
               onTap: () =>
                   dsiHelper.go(context, "/maintain_professor", arguments: professor),
             ),
