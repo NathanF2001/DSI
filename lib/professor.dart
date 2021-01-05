@@ -58,8 +58,7 @@ class ProfessorController {
 
   Future<void> remove(FutureOr<Professor> professor) async {
     Professor p = await professor;
-    //TIP idealmente as duas linhas abaixo deveriam ser executadas
-    //em uma única transação
+
     Future<void> result = professores.doc(p.id).delete();
     pessoaController.remove(p.pessoa);
     return result;
